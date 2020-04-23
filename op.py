@@ -59,51 +59,13 @@ today_data = []
 load_file(today, today_data, '今日')
 
 #資料分析
-yes_op_call_money = int(yesterday_data[0][1])
-yes_op_put_money = int(yesterday_data[1][1])
-yes_op_call_number = int(yesterday_data[2][1])
-yes_op_put_number = int(yesterday_data[3][1])
-yes_fu_call_money = int(yesterday_data[4][1])
-yes_fu_put_money = int(yesterday_data[5][1])
-yes_fu_call_number = int(yesterday_data[6][1])
-yes_fu_put_number = int(yesterday_data[7][1])
-yes_smfu_call_number = int(yesterday_data[8][1])
-yes_smfu_put_number = int(yesterday_data[9][1])
 
-
-today_op_call_money= int(today_data[0][1])
-today_op_put_money = int(today_data[1][1])
-today_op_call_number = int(today_data[2][1])
-today_op_put_number = int(today_data[3][1])
-today_fu_call_money = int(today_data[4][1])
-today_fu_put_money = int(today_data[5][1])
-today_fu_call_number = int(today_data[6][1])
-today_fu_put_number = int(today_data[7][1])
-today_smfu_call_number = int(today_data[8][1])
-today_smfu_put_number = int(today_data[9][1])
-
-dif_op_call_money = today_op_call_money - yes_op_call_money
-dif_op_put_money = today_op_put_money - yes_op_put_money
-dif_op_call_number = today_op_call_number - yes_op_call_number
-dif_op_put_number = today_op_put_number - yes_op_put_number
-dif_fu_call_money = today_fu_call_money - yes_fu_call_money
-dif_fu_put_money = today_fu_put_number - yes_fu_put_money
-dif_fu_call_number = today_fu_call_number - yes_fu_call_number
-dif_fu_put_number = today_fu_put_number - yes_fu_put_number
-dif_smfu_call = today_smfu_call_number - yes_smfu_call_number
-dif_smfu_put = today_smfu_put_number - yes_smfu_put_number
-
-yes_data_list = [yes_op_call_money, yes_op_put_money, yes_op_call_number, yes_op_put_number, yes_fu_call_money, yes_fu_put_money, yes_fu_call_number, yes_fu_put_number, yes_smfu_call_number, yes_smfu_put_number]
-today_data_list = [today_op_call_money, today_op_put_money, today_op_call_number, today_op_put_number, today_fu_call_money, today_fu_put_money,today_fu_call_number, today_fu_put_number, today_smfu_call_number, today_smfu_put_number]
-
+yes_data_list = [int(yesterday_data[i][1]) for i in range(len(yesterday_data))]
+today_data_list = [int(today_data[i][1]) for i in range(len(today_data))]
 dif_list = [today_data_list[i] - yes_data_list[i] for i in range(len(today_data_list))]
 print(dif_list)
 
-# plt.bar(a[0:2], yes_data_list[0:2], label = 'yesterday', align = "edge", width = -0.35)
-# plt.bar(a[0:2], today_data_list[0:2], label = 'today', align = "edge", width = 0.35)
-# plt.legend()
-# plt.savefig(path + str(today) + 'op_money_.png', dpi=300)
-# plt.show()
+
 
 
 def data_visualization(x_range, y_range, save_name):
@@ -127,8 +89,8 @@ print('外資空單期貨增加', str(dif_list[7]) , '口')
 data_visualization(a[8:10], dif_list[8:10], '_dif_smfu_number.png')
 print('外資小台多單期貨增加', str(dif_list[8]) , '口')
 print('外資小台空單期貨增加', str(dif_list[9]) , '口')
-#將圖畫在一張
 
+#將圖畫在一張figure
 plt.figure()
 plt.subplot(1,2,1)
 plt.bar(a[0:2], dif_list[0:2], color=['firebrick','g'])
