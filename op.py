@@ -39,8 +39,8 @@ fu_table = pd.read_html(requests.get(fu_url, headers={'User-agent': 'Mozilla/5.0
 op_bc_bp = 'https://www.taifex.com.tw/cht/3/callsAndPutsDateExcel'
 op_table = pd.read_html(requests.get(op_bc_bp, headers={'User-agent': 'Mozilla/5.0(Windows NT 6.1; Win64; x64)AppleWebKit/537.36(KHTML, like Gecko)Chrome/63.0.3239.132 Safari/537.36'}).text)
 
-# sm_fu_call = int(fu_table[1].iloc[11][9]) + int(fu_table[1].iloc[9][9]) #外資和自營商
-# sm_fu_put = int(fu_table[1].iloc[11][11]) + int(fu_table[1].iloc[9][11]) #外資和自營商
+# sm_fu_call = int(fu_table[1].iloc[11][9]) + int(fu_table[1].iloc[9][9]) #外資和自營商小台
+# sm_fu_put = int(fu_table[1].iloc[11][11]) + int(fu_table[1].iloc[9][11]) #外資和自營商小台
 # fu_call_number_total = table[3].iloc[2, 1]
 # fu_put_number_total = table[3].iloc[2, 5]
 
@@ -87,9 +87,21 @@ Normalize_list = [dif_list[i] / today_data_list[i] for i in range(len(today_data
 
 
 
+
+def autolabel(rects):
+    """Attach a text label above each bar in *rects*, displaying its height."""
+    for rect in rects:
+        height = rect.get_height()
+        plt.annotate('{}'.format(height),
+                    xy=(rect.get_x() + rect.get_width() / 2, height),
+                    xytext=(0, 3),  # 3 points vertical offset
+                    textcoords="offset points",
+                    ha='center', va='bottom')
+
 def data_visualization(x_range, y_range, save_name, title):
-    plt.bar(x_range, y_range, color=['firebrick','g'])
+    rects = plt.bar(x_range, y_range, color=['firebrick','g'])
     plt.title(title)
+    autolabel(rects) #remark content
     path = 'C:\\Users\\RF\\Desktop\\coding\\op\\' + today +'\\'
     if not os.path.isdir(path):
         os.mkdir(path)
@@ -97,47 +109,47 @@ def data_visualization(x_range, y_range, save_name, title):
     plt.show()
     
 def data_print(a=a, dif_list=dif_list):
-    data_visualization(a[0:2], dif_list[0:2], '_dif_op_money.png', '外資總OP金額差異')
+    data_visualization(a[0:2], dif_list[0:2], '_外資總OP金額差異.png', '外資總OP金額差異')
     print('外資多單op增加', str(dif_list[0]) , '金額')
     print('percent: {:.2%}'.format(Normalize_list[0]))
     print('外資空單op增加', str(dif_list[1]) , '金額')
     print('percent: {:.2%}'.format(Normalize_list[1]))
-    data_visualization(a[2:4], dif_list[2:4], '_dif_op_number.png','外資總OP口數差異')
-    print('外資多單op增加', str(dif_list[2]) , '口')
+    data_visualization(a[2:4], dif_list[2:4], '_外資總OP口數差異.png','外資總OP口數差異')
+    print('外資多單總op增加', str(dif_list[2]) , '口')
     print('percent: {:.2%}'.format(Normalize_list[2]))
-    print('外資空單op增加', str(dif_list[3]) , '口')
+    print('外資空單總op增加', str(dif_list[3]) , '口')
     print('percent: {:.2%}'.format(Normalize_list[3]))
-    data_visualization(a[4:6], dif_list[4:6], '_dif_fu_money.png','外資總期貨金額差異')
+    data_visualization(a[4:6], dif_list[4:6], '_外資總期貨金額差異.png','外資總期貨金額差異')
     print('外資多單期貨增加', str(dif_list[4]) , '金額')
     print('percent: {:.2%}'.format(Normalize_list[4]))
     print('外資空單期貨增加', str(dif_list[5]) , '金額')
     print('percent: {:.2%}'.format(Normalize_list[5]))
-    data_visualization(a[6:8], dif_list[6:8], '_dif_fu_number.png','外資大台期貨差異')
+    data_visualization(a[6:8], dif_list[6:8], '_外資大台期貨差異.png','外資大台期貨差異')
     print('外資多單期貨增加', str(dif_list[6]) , '口')
     print('percent: {:.2%}'.format(Normalize_list[6]))
     print('外資空單期貨增加', str(dif_list[7]) , '口')
     print('percent: {:.2%}'.format(Normalize_list[7]))
-    data_visualization(a[8:10], dif_list[8:10], '_dif_smfu_number.png','外資小台期貨差異')
+    data_visualization(a[8:10], dif_list[8:10], '_外資小台期貨差異.png','外資小台期貨差異')
     print('外資小台多單期貨增加', str(dif_list[8]) , '口')
     print('percent: {:.2%}'.format(Normalize_list[8]))
     print('外資小台空單期貨增加', str(dif_list[9]) , '口')
     print('percent: {:.2%}'.format(Normalize_list[9]))
-    data_visualization(a[10:12], dif_list[10:12], '_dif_bcbp_number.png','外資BCBP口數差異')
+    data_visualization(a[10:12], dif_list[10:12], '_外資BCBP口數差異.png','外資BCBP口數差異')
     print('外資BC增加', str(dif_list[10]) , '口')
     print('percent: {:.2%}'.format(Normalize_list[10]))
     print('外資BP增加', str(dif_list[11]) , '口')
     print('percent: {:.2%}'.format(Normalize_list[11]))
-    data_visualization(a[12:14], dif_list[12:14], '_dif_bcbp_money.png','外資BCBP金額差異')
+    data_visualization(a[12:14], dif_list[12:14], '_外資BCBP金額差異.png','外資BCBP金額差異')
     print('外資BC增加', str(dif_list[12]) , '金額')
     print('percent: {:.2%}'.format(Normalize_list[12]))
     print('外資BP增加', str(dif_list[13]) , '金額')
     print('percent: {:.2%}'.format(Normalize_list[13]))
-    data_visualization(a[14:16], dif_list[14:16], '_dif_scsp_nuber.png','外資SCSP口數差異')
+    data_visualization(a[14:16], dif_list[14:16], '_外資SCSP口數差異.png','外資SCSP口數差異')
     print('外資SC增加', str(dif_list[14]) , '口')
     print('percent: {:.2%}'.format(Normalize_list[14]))
     print('外資SP增加', str(dif_list[15]) , '口')
     print('percent: {:.2%}'.format(Normalize_list[15]))
-    data_visualization(a[16:18], dif_list[16:18], '_dif_scsp_mnoey.png','外資SCSP金額差異')
+    data_visualization(a[16:18], dif_list[16:18], '_外資SCSP金額差異.png','外資SCSP金額差異')
     print('外資SC增加', str(dif_list[16]) , '金額')
     print('percent: {:.2%}'.format(Normalize_list[16]))
     print('外資SP增加', str(dif_list[17]) , '金額')
@@ -146,22 +158,22 @@ def data_print(a=a, dif_list=dif_list):
     print(t1)
 
     #將圖畫在一張figure
-    path = 'C:\\Users\\RF\\Desktop\\coding\\op\\' + today +'\\'
-    plt.figure()
-    plt.subplot(1,2,1)
-    plt.bar(a[0:2], dif_list[0:2], color=['firebrick','g'])
-    plt.subplot(1,2,2)
-    plt.bar(a[2:4], dif_list[2:4], color=['firebrick','g'])
-    plt.savefig(path + str(today) + '_dif_op.png', dpi=200)
-    plt.show()
+    # path = 'C:\\Users\\RF\\Desktop\\coding\\op\\' + today +'\\'
+    # plt.figure()
+    # plt.subplot(1,2,1)
+    # plt.bar(a[0:2], dif_list[0:2], color=['firebrick','g'])
+    # plt.subplot(1,2,2)
+    # plt.bar(a[2:4], dif_list[2:4], color=['firebrick','g'])
+    # plt.savefig(path + str(today) + '_dif_op.png', dpi=200)
+    # plt.show()
 
-    plt.figure()
-    plt.subplot(1,2,1)
-    plt.bar(a[4:6], dif_list[4:6], color=['firebrick','g'])
-    plt.subplot(1,2,2)
-    plt.bar(a[6:8], dif_list[6:8], color=['firebrick','g'])
-    plt.savefig(path + str(today) + '_dif_fu.png', dpi=200)
-    plt.show()
+    # plt.figure()
+    # plt.subplot(1,2,1)
+    # plt.bar(a[4:6], dif_list[4:6], color=['firebrick','g'])
+    # plt.subplot(1,2,2)
+    # plt.bar(a[6:8], dif_list[6:8], color=['firebrick','g'])
+    # plt.savefig(path + str(today) + '_dif_fu.png', dpi=200)
+    # plt.show()
 
 data_print()
 
