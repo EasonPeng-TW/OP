@@ -54,6 +54,8 @@ op_call_number = int(table[3].iloc[2][2])
 op_put_number = int(table[3].iloc[2][6])
 fu_call_money = int(table[3].iloc[2][3])
 fu_put_money = int(table[3].iloc[2][7])
+#BCBP_SCSP分計
+# 外資
 bc_nb = int(op_table[1].iloc[2][10])
 sp_nb = int(op_table[1].iloc[5][12])
 bp_nb = int(op_table[1].iloc[5][10])
@@ -62,11 +64,21 @@ bc_mny = int(op_table[1].iloc[2][11])
 sp_mny = int(op_table[1].iloc[5][13])
 bp_mny = int(op_table[1].iloc[5][11])
 sc_mny = int(op_table[1].iloc[2][13])
+#自營商
+bcsf_nb = int(op_table[1].iloc[0][10])
+bpsf_nb = int(op_table[1].iloc[3][10])
+scsf_nb = int(op_table[1].iloc[0][12])
+spsf_nb = int(op_table[1].iloc[3][12])
+bcsf_mny = int(op_table[1].iloc[0][11])
+bpsf_mny = int(op_table[1].iloc[3][11])
+scsf_mny = int(op_table[1].iloc[0][13])
+spsf_mny = int(op_table[1].iloc[3][13])
+
 
 a = ['Op_call_money', 'Op_put_money', 'Op_call_number', 'Op_put_number', 'Fu_call_money', 'Fu_put_money', 'Fu_call_number', 'Fu_put_number', 'Sm_fu_call', 'Sm_fu_put',
-     'Bc_nb', 'Bp_nb', 'Bc_mny', 'Bp_mny', 'Sc_nb', 'Sp_nb', "Sc_mny", 'Sp_mny']
+     'Bc_nb', 'Bp_nb', 'Bc_mny', 'Bp_mny', 'Sc_nb', 'Sp_nb', "Sc_mny", 'Sp_mny', 'bcsf_nb', 'bpsf_nb', 'bcsf_mny', 'bpsf_mny', 'scsf_nb', 'spsf_nb', 'scsf_mny', 'spsf_mny']
 b = [op_call_money, op_put_money, op_call_number,op_put_number, fu_call_money, fu_put_money, fu_call_number, fu_put_number, sm_fu_call, sm_fu_put,
-     bc_nb, bp_nb, bc_mny, bp_mny, sc_nb, sp_nb, sc_mny, sp_mny]
+     bc_nb, bp_nb, bc_mny, bp_mny, sc_nb, sp_nb, sc_mny, sp_mny, bcsf_nb, bpsf_nb, bcsf_mny, bpsf_mny, scsf_nb, spsf_nb, scsf_mny, spsf_mny]
 data = pd.DataFrame({'Foreign' : a,'Amount' : b})
 data.to_csv(path + str(today) +'.csv', index = False, sep=str(','), encoding='utf-8')
 
@@ -154,7 +166,27 @@ def data_print(a=a, dif_list=dif_list):
     print('percent: {:.2%}'.format(Normalize_list[16]))
     print('外資SP增加', str(dif_list[17]) , '金額')
     print('percent: {:.2%}'.format(Normalize_list[17]))
-    
+    data_visualization(a[18:20], dif_list[18:20], '_自營BCBP口數差異.png','自營BCBP口數差異')
+    print('自營BC增加', str(dif_list[18]) , '口')
+    print('percent: {:.2%}'.format(Normalize_list[18]))
+    print('自營BP增加', str(dif_list[19]) , '口')
+    print('percent: {:.2%}'.format(Normalize_list[19]))
+    data_visualization(a[20:22], dif_list[20:22], '_自營BCBP金額差異.png','自營BCBP金額差異')
+    print('自營BC增加', str(dif_list[20]) , '金額')
+    print('percent: {:.2%}'.format(Normalize_list[20]))
+    print('自營BP增加', str(dif_list[21]) , '金額')
+    print('percent: {:.2%}'.format(Normalize_list[21]))
+    data_visualization(a[22:24], dif_list[22:24], '_自營SCSP口數差異.png','自營SCSP口數差異')
+    print('自營SC增加', str(dif_list[22]) , '口')
+    print('percent: {:.2%}'.format(Normalize_list[22]))
+    print('自營SP增加', str(dif_list[23]) , '口')
+    print('percent: {:.2%}'.format(Normalize_list[23]))
+    data_visualization(a[24:26], dif_list[24:26], '_自營SCS金額差異.png','自營SCSP金額差異')
+    print('自營SC增加', str(dif_list[24]) , '金額')
+    print('percent: {:.2%}'.format(Normalize_list[24]))
+    print('自營SP增加', str(dif_list[25]) , '金額')
+    print('percent: {:.2%}'.format(Normalize_list[25]))
+
     print(t1)
 
     #將圖畫在一張figure
